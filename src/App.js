@@ -51,7 +51,7 @@ const VIDEO_FILENAMES = {
     'Pokemon is the enemy': 'pokemonphenomenonistheenemy.mp4',
     'Space communism': 'spacecommunism.mp4',
     'Time to leave them all behind': 'timetoleavethemallbehind.mp4',
-    'What! What the fuck!': 'whatwhatthefuck.mp4',
+    'What! What the ****!': 'whatwhatthefuck.mp4',
     'You lose! Good day sir!': 'youlosegooddaysir.mp4',
 }
 
