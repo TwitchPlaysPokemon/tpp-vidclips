@@ -39,10 +39,14 @@ const VIDEO_FILENAMES = {
     'Your team sucks': 'yourteamsucks.mp4',
     'The memes...': 'thememes.mp4',
     "Now that's a lotta damage": 'nowthatsalottadamage.mp4',
-    "El Risitas Laugh": 'elrisitas.mp4',
+    "El Risitas Laugh": 'spanishlaughingguy.mp4',
     "Wow": 'wow.mp4',
     "Brutal, savage, rekt": 'brutalsavagerekt.mp4',
     "Ice guns we're packing": 'iceguns.mp4',
+    'Enjoy your gaming': 'enjoyyourgaming.mp4',
+    'Omae wa mou shindeiru': 'omaewamoushindeiru.mp4',
+    'Standing here I realize': 'standinghereirealize.mp4',
+    'You fool': 'youfool.mp4',
 }
 
 class App extends Component {
