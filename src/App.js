@@ -46,7 +46,7 @@ const VIDEO_FILENAMES = {
     'Enjoy your gaming': 'enjoyyourgaming.mp4',
     'Omae wa mou shindeiru': 'omaewamoushindeiru.mp4',
     'Standing here I realize': 'standinghereirealize.mp4',
-    'You fool': 'youfool.mp4',
+    'You ****': 'youfool.mp4',
     'No god please no': 'nogodpleaseno.mp4',
     'Pokemon is the enemy': 'pokemonphenomenonistheenemy.mp4',
     'Space communism': 'spacecommunism.mp4',
