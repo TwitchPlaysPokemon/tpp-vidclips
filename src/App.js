@@ -47,6 +47,12 @@ const VIDEO_FILENAMES = {
     'Omae wa mou shindeiru': 'omaewamoushindeiru.mp4',
     'Standing here I realize': 'standinghereirealize.mp4',
     'You fool': 'youfool.mp4',
+    'No god please no': 'nogodpleaseno.mp4',
+    'Pokemon is the enemy': 'pokemonphenomenonistheenemy.mp4',
+    'Space communism': 'spacecommunism.mp4',
+    'Time to leave them all behind': 'timetoleavethemallbehind.mp4',
+    'What! What the fuck!': 'whatwhatthefuck.mp4',
+    'You lose! Good day sir!': 'youlosegooddaysir.mp4',
 }
 
 class App extends Component {
