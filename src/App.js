@@ -60,6 +60,9 @@ const VIDEO_FILENAMES = {
     "Anime was a mistake": 'animewasamistake.mp4',
     "Rich Evans Laugh": 'richevanslaugh.mp4',
     "Memes, the DNA of the soul": 'memesdnaofthesoul.mp4',
+    "Do it": "doit.mp4",
+    "Unlimited power!": "unlimitedpower.mp4",
+    "What am I fighting for!?": "whatamifightingfor.mp4",
 }
 
 class App extends Component {
