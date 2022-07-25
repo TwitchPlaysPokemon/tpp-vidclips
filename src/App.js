@@ -53,6 +53,13 @@ const VIDEO_FILENAMES = {
     'Time to leave them all behind': 'timetoleavethemallbehind.mp4',
     'What! What the ****!': 'whatwhatthefuck.mp4',
     'You lose! Good day sir!': 'youlosegooddaysir.mp4',
+    'Rickroll': 'rickroll.mp4',
+    "I can't handle the truth": 'icanthandlethetruth.mp4',
+    "Banished to the shadow realm": 'shadowrealm.mp4',
+    "Let's rev it up": 'letsrevitup.mp4',
+    "Anime was a mistake": 'animewasamistake.mp4',
+    "Rich Evans Laugh": 'richevanslaugh.mp4',
+    "Memes, the DNA of the soul": 'memesdnaofthesoul.mp4',
 }
 
 class App extends Component {
