@@ -118,7 +118,7 @@ class App extends Component {
         let video = null
         if(this.state.queue.length > 0) {
             const filename = this.state.queue[0]
-            video = <video width="320" height="288" autoPlay onEnded={this.onVideoEnd} key={this.state.iterations}>
+            video = <video width="320" height="288" autoPlay onEnded={this.onVideoEnd} onError={this.onVideoEnd} key={this.state.iterations}>
                 <source src={'/videos/' + filename} type="video/mp4" />
             </video>
         }
