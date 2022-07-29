@@ -64,9 +64,9 @@ const VIDEO_FILENAMES = {
     "Unlimited power!": "unlimitedpower.mp4",
     "What am I fighting for!?": "whatamifightingfor.mp4",
     "I declare bankruptcy!": "ideclarebankruptcy.mp4",
-    "What a loser": "whataloser.mp4",
+    "What a l***r": "whataloser.mp4",
     "I earned so many badges": "iearnedsomanybadges.mp4",
-    "So long, losers": "solonglosers.mp4",
+    "So long, l***rs": "solonglosers.mp4",
     "You can never have too many": "youcanneverhavetoomanypokemon.mp4",
     "No invitation, no party": "noinvitationnoparty.mp4",
 }
