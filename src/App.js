@@ -69,6 +69,7 @@ const VIDEO_FILENAMES = {
     "So long, l***rs": "solonglosers.mp4",
     "You can never have too many": "youcanneverhavetoomanypokemon.mp4",
     "No invitation, no party": "noinvitationnoparty.mp4",
+    "I'll steal it": "illstealit.mp4",
 }
 
 class App extends Component {
