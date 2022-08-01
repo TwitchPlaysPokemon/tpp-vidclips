@@ -70,6 +70,7 @@ const VIDEO_FILENAMES = {
     "You can never have too many": "youcanneverhavetoomanypokemon.mp4",
     "No invitation, no party": "noinvitationnoparty.mp4",
     "I'll steal it": "illstealit.mp4",
+    "YES! YES!": "yes.mp4",
 }
 
 class App extends Component {
