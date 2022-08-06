@@ -72,6 +72,8 @@ const VIDEO_FILENAMES = {
     "I'll steal it": "illstealit.mp4",
     "YES! YES!": "yes.mp4",
     "It's only game, why mad?": "itsonlygame.mp4",
+    "Why are we still here?": "whyarewestillhere.mp4",
+    "They played us like a fiddle": "playeduslikeadamnfiddle.mp4",
 }
 
 class App extends Component {
