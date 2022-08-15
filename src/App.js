@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 
 import {RefreshingAuthProvider} from '@twurple/auth'
-import {PubSubClient} from '@twurple/pubsub'
+import {BasicPubSubClient, PubSubClient} from '@twurple/pubsub'
 
 const TOKENS_KEY = 'tokens8.json'
 
@@ -104,7 +104,9 @@ class App extends Component {
             },
             tokenData
         )
-        const pubSubClient = new PubSubClient()
+        const rootClient = new BasicPubSubClient()
+        const pubSubClient = new PubSubClient(rootClient)
+        rootClient.onDisconnect(() => rootClient.connect())
         const userId = await pubSubClient.registerUserListener(authProvider)
         this.setState({'connected': true})
         this.listener = await pubSubClient.onRedemption(userId, (message) => {
