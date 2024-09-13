@@ -90,9 +90,17 @@ class App extends Component {
     }
     componentDidMount() {
         this.auth()
+        
+        // Set a timer to refresh the page every hour
+        this.refreshTimer = setInterval(() => {
+            window.location.reload();
+        }, 3600000); // 3600000 milliseconds = 1 hour
     }
     componentWillUnmount() {
         if(this.listener) this.listener.remove()
+        
+        // Clear the refresh timer when the component unmounts
+        clearInterval(this.refreshTimer);
     }
     async auth() {
         const tokenData = JSON.parse(window.localStorage.getItem(TOKENS_KEY))
