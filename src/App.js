@@ -78,10 +78,14 @@ class App extends Component {
     }
 
     connectWS() {
-        this.ws = new WebSocket('ws://localhost:6789')
+        // Get WebSocket URL from URL parameters or use default
+        const urlParams = new URLSearchParams(window.location.search);
+        const wsUrl = urlParams.get('ws') || 'ws://localhost:6789';
+        
+        this.ws = new WebSocket(wsUrl)
 
         this.ws.onopen = () => {
-            console.log('WebSocket connected nya~')
+            console.log('WebSocket connected to', wsUrl)
             this.setState({connected: true})
         }
 
