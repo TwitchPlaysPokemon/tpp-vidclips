@@ -1,28 +1,6 @@
 import React, {Component} from 'react'
 import './App.css'
 
-import {RefreshingAuthProvider} from '@twurple/auth'
-import {BasicPubSubClient, PubSubClient} from '@twurple/pubsub'
-
-const TOKENS_KEY = 'tokens8.json'
-
-const ARGS = window.location.hash.slice(1).split('/')
-const CLIENT_ID = ARGS[0]
-const CLIENT_SECRET = ARGS[1]
-
-const og = window.localStorage.getItem('og')
-if(og !== window.location.hash) {
-    const tokenData = {
-        "accessToken": ARGS[2],
-        "expiresIn": 0,
-        "obtainmentTimestamp": 0,
-        "refreshToken": ARGS[3]
-    }
-    window.localStorage.setItem(TOKENS_KEY, JSON.stringify(tokenData))
-    window.localStorage.setItem('og', window.location.hash)
-}
-
-
 const VIDEO_FILENAMES = {
     'Drying pan': 'dryingpan.mp4',
     'Eeeeeh?': 'eeeeeh.mp4',
@@ -79,77 +57,86 @@ const VIDEO_FILENAMES = {
 class App extends Component {
     constructor() {
         super()
-        this.listener = null
-        this.state = {
-            'queue': [],
-            'iterations': 0,
-            'connected': false
-        }
+        this.ws = null
         this.msgIds = []
+        this.state = {
+            queue: [],
+            iterations: 0,
+            connected: false,
+        }
         this.onVideoEnd = this.onVideoEnd.bind(this)
     }
+
     componentDidMount() {
-        this.auth()
-        
-        // Set a timer to refresh the page every hour
-        this.refreshTimer = setInterval(() => {
-            window.location.reload();
-        }, 3600000); // 3600000 milliseconds = 1 hour
+        this.connectWS()
+        this.refreshTimer = setInterval(() => window.location.reload(), 3600000)
     }
+
     componentWillUnmount() {
-        if(this.listener) this.listener.remove()
-        
-        // Clear the refresh timer when the component unmounts
-        clearInterval(this.refreshTimer);
+        if (this.ws) this.ws.close()
+        clearInterval(this.refreshTimer)
     }
-    async auth() {
-        const tokenData = JSON.parse(window.localStorage.getItem(TOKENS_KEY))
-        const authProvider = new RefreshingAuthProvider(
-            {
-                clientId: CLIENT_ID,
-                clientSecret: CLIENT_SECRET,
-                onRefresh: newTokenData => window.localStorage.setItem(TOKENS_KEY, JSON.stringify(newTokenData))
-            },
-            tokenData
-        )
-        const rootClient = new BasicPubSubClient()
-        const pubSubClient = new PubSubClient(rootClient)
-        rootClient.onDisconnect(() => rootClient.connect())
-        const userId = await pubSubClient.registerUserListener(authProvider)
-        this.setState({'connected': true})
-        this.listener = await pubSubClient.onRedemption(userId, (message) => {
-            if(this.msgIds.includes(message.id)) return
-            if(!VIDEO_FILENAMES[message.rewardTitle]) return
-            this.msgIds.push(message.id)
-            const queue = [...this.state.queue]
-            queue.push(VIDEO_FILENAMES[message.rewardTitle])
-            this.setState({'queue': queue})
-        })
-    }
-    onVideoEnd() {
-        const queue = [...this.state.queue]
-        queue.shift()
-        this.setState({
-            'queue': queue,
-            'iterations': this.state.iterations + 1
-        })
-        console.log(queue)
-    }
-    render() {
-        let video = null
-        if(this.state.queue.length > 0) {
-            const filename = this.state.queue[0]
-            video = <video width="320" height="288" autoPlay onEnded={this.onVideoEnd} onError={this.onVideoEnd} key={this.state.iterations}>
-                <source src={'/videos/' + filename} type="video/mp4" />
-            </video>
+
+    connectWS() {
+        this.ws = new WebSocket('ws://localhost:6789')
+
+        this.ws.onopen = () => {
+            console.log('WebSocket connected nya~')
+            this.setState({connected: true})
         }
-        let error = null
-        if(this.state.error_msg) {
-            error = <div className="error">Error: {this.state.error_msg}</div>
+
+        this.ws.onmessage = (event) => {
+            try {
+                const msg = JSON.parse(event.data);
+                console.log('Received message:', msg);
+                if (msg.type !== 'channel_point_reward_redemption_add') {
+                    return;
+                }
+                const data = msg.extra_parameters;
+                if (this.msgIds.includes(data.id)) {
+                    return;
+                }
+                this.msgIds.push(data.id);
+                const title = data.reward.title;
+                console.log('Title:', title);
+                const filename = VIDEO_FILENAMES[title];
+                if (!filename) {
+                    return;
+                }
+                this.setState(prev => ({queue: [...prev.queue, filename]}));
+            } catch (e) {
+                console.error('Failed to parse message', e);
+            }
+        }
+
+        this.ws.onclose = () => {
+            console.log('WebSocket disconnected, reconnecting in 1s...')
+            this.setState({connected: false})
+            setTimeout(() => this.connectWS(), 1000)
+        }
+
+        this.ws.onerror = (err) => console.error('WebSocket error', err)
+    }
+
+    onVideoEnd() {
+        this.setState(prev => ({queue: prev.queue.slice(1), iterations: prev.iterations + 1}))
+    }
+
+    render() {
+        const {queue, iterations, error_msg} = this.state
+        let video = null
+        if (queue.length > 0) {
+            const src = '/videos/' + queue[0]
+            video = (
+                <video width="320" height="288" autoPlay onEnded={this.onVideoEnd} onError={this.onVideoEnd} key={iterations}>
+                    <source src={src} type="video/mp4" />
+                </video>
+            )
         }
         return (
             <div className="App">
-                {error}
+                {!this.state.connected && <div>Connecting... nya~</div>}
+                {error_msg && <div className="error">Error: {error_msg}</div>}
                 {video}
             </div>
         )
